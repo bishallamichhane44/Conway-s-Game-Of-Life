@@ -1,6 +1,6 @@
 # Conway's Game of Life
 
-This repository contains an implementation of Conway's Game of Life, a cellular automaton devised by British mathematician John Horton Conway. The game  evolution is determined by its initial state, requiring no further input.
+This repository contains an implementation of Conway's Game of Life, a cellular automaton devised by British mathematician John Horton Conway. The game  evolution is determined by its initial state, requiring no further input. This is made in C++ using SFML.
 
 ## About
 
@@ -24,5 +24,5 @@ The universe of the Game in this case is Bounded, two-dimensional orthogonal gri
 ```
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](https://github.com/bishallamichhane44/Conway-s-Game-Of-Life/blob/master/images/demo.png)
 
