@@ -6,6 +6,10 @@
 #include <cmath>
 using namespace std;
 
+#include "./includes/fonts.cpp"
+UseFonts colus("colus.otf", "fonts/colus.otf");
+
+
 // Change these values according to your screen size.
 const float scale = 1.25;
 
@@ -21,6 +25,7 @@ const float cellWidth = windowWidth / cols;
 const float cellHeight = windowHeight / rows;
 
 int disp=0;
+int generation=0;
 
 
 
@@ -123,6 +128,7 @@ public:
     //To clear all inputs
     void clearAll()
     {   disp=0;
+        generation=0;
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < cols; j++)
@@ -140,6 +146,7 @@ public:
     //To update each cells and decide whether to keep them alive or dead in next generation.
     void updatecell(){
         sf::sleep(sf::seconds(0.1f));
+        generation++;
            for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < cols; j++)
@@ -240,6 +247,18 @@ public:
 };
 
 
+void generation_display(sf::RenderWindow &window){
+
+        sf::Text text;
+        text.setString(std::to_string(generation));
+        text.setFont(colus.font);
+        text.setCharacterSize(24);
+        text.setFillColor(sf::Color::Magenta);
+        text.setPosition(50, 50);
+
+        window.draw(text);
+}
+
 int main(){
     
     sf::RenderWindow window;
@@ -267,7 +286,14 @@ int main(){
 
 
         window.clear(sf::Color(240, 240, 240)); // Light grey background, close to white
+
+
         g1.displayGrid(window);
+
+        //To display generation count
+        generation_display(window);
+        
+        sf::Text text, text2;
 
         window.display();
         
