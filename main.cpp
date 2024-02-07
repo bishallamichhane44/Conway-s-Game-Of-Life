@@ -16,7 +16,7 @@ UseFonts colus("colus.otf", "fonts/colus.otf");
 const float scale = 1.25;
 
 
-const int multiply=2;
+const int multiply=1;
 
 int rows = 36*scale*multiply;
 int cols = 64*scale*multiply;
@@ -32,7 +32,9 @@ int generation=0;
 int populate_c=0;
 
 
-
+sf::Color background = sf::Color(0x40, 0x40, 0x40);
+sf::Color cell_color = sf::Color(0xff, 0xd1, 0x00);
+sf::Color text_color = sf::Color(0xff, 0x67, 0x00);   //1f7a8c
 
 class Cell
 {
@@ -50,20 +52,20 @@ public:
         cell->setPosition(posX, posY);
         if (!isalive_n)
         {
-            cell->setFillColor(sf::Color(89, 120, 254)); // Light blue shade #bde0fe
+            cell->setFillColor(cell_color); // Light blue shade #bde0fe
         }
 
-        cell->setOutlineThickness(1.0f);
-        cell->setOutlineColor(sf::Color::Transparent);
+        cell->setOutlineThickness(0.5f);
+        cell->setOutlineColor(sf::Color(0x40, 0x40, 0x7f));
        
     }
 
     void updatecell(){
         if(isalive_n==true){
-            cell->setFillColor(sf::Color::Green);
+            cell->setFillColor(cell_color);
         }
         if(isalive_n==false){
-            cell->setFillColor(sf::Color::White);
+            cell->setFillColor(background);
         }
     }
 
@@ -104,7 +106,7 @@ public:
 
                 if (cells[i][j].isalive_n==false)
                 {
-                    cells[i][j].cell->setFillColor(sf::Color::White);
+                    cells[i][j].cell->setFillColor(background);
                 
                 }
                 cells[i][j].createCell(cellWidth, cellHeight, j * cellWidth, i * cellHeight, i, j);
@@ -140,7 +142,7 @@ public:
             {
                 cells[i][j].isalive_p = false;
                 cells[i][j].isalive_n = false;   
-                cells[i][j].cell->setFillColor(sf::Color::White);
+                cells[i][j].cell->setFillColor(background);
             }
         }
     }
@@ -282,7 +284,7 @@ void generation_display(sf::RenderWindow &window){
         text.setString(std::to_string(generation));
         text.setFont(colus.font);
         text.setCharacterSize(24);
-        text.setFillColor(sf::Color::Magenta);
+        text.setFillColor(text_color);
         text.setPosition(50, 50);
 
         window.draw(text);
@@ -328,7 +330,7 @@ int main(){
 
 
 
-        window.clear(sf::Color(240, 240, 240)); // Light grey background, close to white
+        window.clear(background); // Light grey background, close to white
 
 
         g1.displayGrid(window);
