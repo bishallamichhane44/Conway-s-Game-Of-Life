@@ -1,6 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 
+#include <random>
+
 #include <windows.h>
 #include <iostream>
 #include <cmath>
@@ -14,9 +16,10 @@ UseFonts colus("colus.otf", "fonts/colus.otf");
 const float scale = 1.25;
 
 
+const int multiply=2;
 
-int rows = 36*scale;
-int cols = 64*scale;
+int rows = 36*scale*multiply;
+int cols = 64*scale*multiply;
 
 const float windowWidth = 1280*scale;
 const float windowHeight = 720*scale;
@@ -26,6 +29,7 @@ const float cellHeight = windowHeight / rows;
 
 int disp=0;
 int generation=0;
+int populate_c=0;
 
 
 
@@ -46,11 +50,11 @@ public:
         cell->setPosition(posX, posY);
         if (!isalive_n)
         {
-            cell->setFillColor(sf::Color::White);
+            cell->setFillColor(sf::Color(89, 120, 254)); // Light blue shade #bde0fe
         }
 
         cell->setOutlineThickness(1.0f);
-        cell->setOutlineColor(sf::Color::Black);
+        cell->setOutlineColor(sf::Color::Transparent);
        
     }
 
@@ -192,13 +196,38 @@ public:
                 cells[i][j].isalive_n = false;
             }
 
+     
+
         }
 
         
 
     }}
 
+    void populate(){
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                if(7==getRandomValue()){
+                    cells[i][j].isalive_n = true;
+                    cells[i][j].isalive_p = true;
+                }else{
+                    cells[i][j].isalive_n = false;
+                }
+                
+            }
+        }
+        
+    }
 
+    int getRandomValue() {
+    static std::random_device rd; // Obtain a random number from hardware
+    static std::mt19937 eng(rd()); // Seed the generator
+    std::uniform_int_distribution<> distr(0, 10); // Define the range
+
+    return distr(eng); // Generate the random number
+}
 
     void displayGrid(sf::RenderWindow &window)
     {
@@ -259,6 +288,14 @@ void generation_display(sf::RenderWindow &window){
         window.draw(text);
 }
 
+
+
+
+// Returns a random integer between 0 and 10.
+
+
+
+
 int main(){
     
     sf::RenderWindow window;
@@ -281,6 +318,12 @@ int main(){
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || disp==1)
         {   disp=1;
             g1.updatecell();
+           
+        }
+        
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::P) && populate_c==0){
+            g1.populate();
+            cout<<"ami"<<endl;
         }
 
 
