@@ -14,6 +14,7 @@ UseFonts colus("colus.otf", "fonts/colus.otf");
 
 // Change these values according to your screen size.
 const float scale = 1.25;
+const int density = 5;
 
 
 const int multiply=1;
@@ -210,13 +211,18 @@ public:
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < cols; j++)
-            {
-                if(7==getRandomValue()){
+            {  int half_r=rows/2;
+               int half_c=cols/2;
+               if(abs(i-half_r)<(rows/6) && abs(j-half_c)<(cols/6)){
+                if(1==getRandomValue()){
                     cells[i][j].isalive_n = true;
                     cells[i][j].isalive_p = true;
                 }else{
                     cells[i][j].isalive_n = false;
                 }
+                
+               }
+                
                 
             }
         }
@@ -226,7 +232,7 @@ public:
     int getRandomValue() {
     static std::random_device rd; // Obtain a random number from hardware
     static std::mt19937 eng(rd()); // Seed the generator
-    std::uniform_int_distribution<> distr(0, 10); // Define the range
+    std::uniform_int_distribution<> distr(0, density); // Define the range
 
     return distr(eng); // Generate the random number
 }
